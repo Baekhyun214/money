@@ -1,0 +1,115 @@
+:root {
+  color-scheme: light;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: #f5f7fb; color: #1d2330; }
+header, footer {
+  padding: 16px;
+  background: white;
+  border-bottom: 1px solid #e6ebf2;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.member-switch-wrap { display: flex; flex-direction: column; gap: 6px; min-width: 220px; }
+main {
+  max-width: 1120px;
+  margin: 20px auto;
+  padding: 0 12px;
+  display: grid;
+  gap: 16px;
+}
+.card {
+  background: white;
+  border: 1px solid #e6ebf2;
+  border-radius: 12px;
+  padding: 16px;
+}
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+}
+.inline-form { display: flex; gap: 8px; }
+.inline-form input { flex: 1; }
+.grid-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+.grid-form label { display: flex; flex-direction: column; gap: 4px; }
+.full { grid-column: 1 / -1; }
+input, select, button {
+  padding: 8px;
+  border: 1px solid #cfd7e6;
+  border-radius: 8px;
+  font-size: 14px;
+}
+button {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+button:hover { background: #2869cd; }
+button.secondary { background: #6b7280; }
+button.secondary:hover { background: #4e5560; }
+.hint { color: #4b5563; margin-top: 8px; }
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+.kpis div {
+  background: #f8fbff;
+  border: 1px solid #dce7f8;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.kpis span {
+  font-size: 20px;
+  font-weight: 700;
+  margin-top: 6px;
+}
+.progress {
+  width: 100%;
+  height: 12px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+}
+#goal-progress {
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #22c55e, #0ea5e9);
+}
+table { width: 100%; border-collapse: collapse; }
+th, td {
+  text-align: left;
+  border-bottom: 1px solid #edf2f9;
+  padding: 8px;
+  font-size: 14px;
+}
+ul#member-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+ul#member-list li {
+  background: #eff6ff;
+  border: 1px solid #d2e4ff;
+  border-radius: 999px;
+  padding: 6px 10px;
+}
+@media (max-width: 680px) {
+  .inline-form { flex-direction: column; }
+}
