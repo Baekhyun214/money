@@ -4,6 +4,11 @@
 }
 * { box-sizing: border-box; }
 body { margin: 0; background: #f5f7fb; color: #1d2330; }
+body {
+  margin: 0;
+  background: #f5f7fb;
+  color: #1d2330;
+}
 header, footer {
   padding: 16px;
   background: white;
@@ -19,6 +24,8 @@ header {
 .member-switch-wrap { display: flex; flex-direction: column; gap: 6px; min-width: 220px; }
 main {
   max-width: 1120px;
+main {
+  max-width: 1100px;
   margin: 20px auto;
   padding: 0 12px;
   display: grid;
@@ -91,6 +98,10 @@ button.secondary:hover { background: #4e5560; }
   background: linear-gradient(90deg, #22c55e, #0ea5e9);
 }
 table { width: 100%; border-collapse: collapse; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
 th, td {
   text-align: left;
   border-bottom: 1px solid #edf2f9;

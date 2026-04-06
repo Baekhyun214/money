@@ -16,6 +16,8 @@
         <label for="active-member"><strong>현재 보기</strong></label>
         <select id="active-member"></select>
       </div>
+      <h1>가족 용돈/재테크 대시보드</h1>
+      <p>나/첫째/둘째로 시작해서 자유롭게 멤버를 추가하세요.</p>
     </header>
 
     <main>
@@ -115,6 +117,10 @@
         <table>
           <thead>
             <tr><th>일자</th><th>합계</th></tr>
+        <h2>일자별 합계</h2>
+        <table>
+          <thead>
+            <tr><th>일자</th><th>용돈 수입 합계</th></tr>
           </thead>
           <tbody id="daily-table"></tbody>
         </table>
@@ -135,6 +141,10 @@
         <table>
           <thead>
             <tr><th>일자</th><th>멤버</th><th>종류</th><th>카테고리</th><th>금액</th><th>수익률</th><th>메모</th></tr>
+        <h2>전체 거래 내역</h2>
+        <table>
+          <thead>
+            <tr><th>일자</th><th>멤버</th><th>종류</th><th>금액</th><th>수익률</th><th>메모</th></tr>
           </thead>
           <tbody id="tx-table"></tbody>
         </table>
@@ -143,6 +153,7 @@
 
     <footer>
       <small>프로토타입 저장소: 브라우저 LocalStorage (계정 공유/동기화는 다음 단계에서 Firebase 연동)</small>
+      <small>현재 버전은 브라우저 LocalStorage에 저장됩니다. (프로토타입)</small>
     </footer>
 
     <script src="app.js"></script>

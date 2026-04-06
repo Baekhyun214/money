@@ -12,6 +12,11 @@ const initialState = {
     type: "all",
     category: "all",
   },
+const STORE_KEY = "allowance_dashboard_v1";
+
+const initialState = {
+  members: ["나", "첫째", "둘째"],
+  transactions: [],
 };
 
 const state = loadState();
@@ -31,6 +36,7 @@ function loadState() {
         ...initialState.filters,
         ...(parsed.filters || {}),
       },
+      transactions: Array.isArray(parsed.transactions) ? parsed.transactions : [],
     };
   } catch {
     return structuredClone(initialState);
@@ -79,6 +85,11 @@ function renderMembers() {
   allOption.value = "ALL";
   allOption.textContent = "전체 보기";
   activeMemberSelect.appendChild(allOption);
+function renderMembers() {
+  const memberList = document.getElementById("member-list");
+  const memberSelect = document.getElementById("tx-member");
+  memberList.innerHTML = "";
+  memberSelect.innerHTML = "";
 
   state.members.forEach((name) => {
     const li = document.createElement("li");
@@ -134,6 +145,16 @@ function renderBudgetAndGoal() {
 function renderDailyAllowance(filtered) {
   const dailyMap = new Map();
   filtered
+    const option = document.createElement("option");
+    option.value = name;
+    option.textContent = name;
+    memberSelect.appendChild(option);
+  });
+}
+
+function renderDailyAllowance() {
+  const dailyMap = new Map();
+  state.transactions
     .filter((tx) => tx.type === "allowance")
     .forEach((tx) => {
       dailyMap.set(tx.date, (dailyMap.get(tx.date) || 0) + Number(tx.amount));
@@ -162,6 +183,9 @@ function renderCategorySummary(filtered) {
 function renderTransactions(filtered) {
   const body = document.getElementById("tx-table");
   const rows = [...filtered].sort((a, b) => b.date.localeCompare(a.date));
+function renderTransactions() {
+  const body = document.getElementById("tx-table");
+  const rows = [...state.transactions].sort((a, b) => b.date.localeCompare(a.date));
   body.innerHTML = rows
     .map(
       (tx) => `<tr>
@@ -169,6 +193,7 @@ function renderTransactions(filtered) {
       <td>${tx.member}</td>
       <td>${labelType(tx.type)}</td>
       <td>${tx.category || "-"}</td>
+      <td>${tx.type}</td>
       <td>${formatKRW(tx.amount)}</td>
       <td>${tx.returnRate ?? "-"}${tx.returnRate != null ? "%" : ""}</td>
       <td>${tx.note || ""}</td>
@@ -182,11 +207,19 @@ function renderKPIs(filtered) {
   const saving = sumByType(filtered, "saving");
   const invest = sumByType(filtered, "investment");
   const expense = sumByType(filtered, "expense");
+    .join("") || `<tr><td colspan="6">데이터 없음</td></tr>`;
+}
+
+function renderKPIs() {
+  const allowance = sumByType("allowance");
+  const saving = sumByType("saving");
+  const invest = sumByType("investment");
   const assetTotal = saving + invest;
   const savingRatio = assetTotal ? (saving / assetTotal) * 100 : 0;
   const investRatio = assetTotal ? (invest / assetTotal) * 100 : 0;
 
   const investReturns = filtered
+  const investReturns = state.transactions
     .filter((tx) => tx.type === "investment" && tx.returnRate != null && !Number.isNaN(Number(tx.returnRate)))
     .map((tx) => Number(tx.returnRate));
   const avgReturn = investReturns.length
@@ -218,6 +251,8 @@ function setText(id, text) {
 
 function sumByType(transactions, type) {
   return transactions
+function sumByType(type) {
+  return state.transactions
     .filter((tx) => tx.type === type)
     .reduce((sum, tx) => sum + Number(tx.amount || 0), 0);
 }
@@ -323,6 +358,9 @@ function renderAll() {
   renderDailyAllowance(filtered);
   renderCategorySummary(filtered);
   renderTransactions(filtered);
+  renderKPIs();
+  renderDailyAllowance();
+  renderTransactions();
 }
 
 function init() {
