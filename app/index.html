@@ -11,6 +11,16 @@
       <h1>가족 용돈/재테크 대시보드</h1>
       <p>멤버별로 입력/조회 분리해서 관리합니다.</p>
       <div id="member-tabs" class="member-tabs"></div>
+      <div>
+        <h1>가족 용돈/재테크 대시보드</h1>
+        <p>멤버별로 따로 입력하고, 전체/개별 현황을 빠르게 비교할 수 있습니다.</p>
+      </div>
+      <div class="member-switch-wrap">
+        <label for="active-member"><strong>현재 보기</strong></label>
+        <select id="active-member"></select>
+      </div>
+      <h1>가족 용돈/재테크 대시보드</h1>
+      <p>나/첫째/둘째로 시작해서 자유롭게 멤버를 추가하세요.</p>
     </header>
 
     <main>
@@ -31,6 +41,7 @@
             <button type="submit">저장</button>
           </form>
           <p id="budget-summary" class="hint"></p>
+          <p id="budget-summary" class="hint">설정된 예산이 없습니다.</p>
         </div>
         <div>
           <h2>저축 목표</h2>
@@ -40,6 +51,10 @@
           </form>
           <p id="goal-summary" class="hint"></p>
           <div class="progress"><div id="goal-progress"></div></div>
+          <p id="goal-summary" class="hint">설정된 목표가 없습니다.</p>
+          <div class="progress">
+            <div id="goal-progress"></div>
+          </div>
         </div>
       </section>
 
@@ -50,6 +65,11 @@
           <label>일자<input id="tx-date" type="date" required /></label>
           <label>대상 멤버<select id="tx-member" required></select></label>
           <label>종류
+        <form id="tx-form" class="grid-form">
+          <label>일자<input id="tx-date" type="date" required /></label>
+          <label>대상 멤버<select id="tx-member" required></select></label>
+          <label>
+            종류
             <select id="tx-type" required>
               <option value="allowance">용돈 수입</option>
               <option value="saving">저축</option>
@@ -60,6 +80,18 @@
           <label>카테고리
             <select id="tx-category" required>
               <option value="용돈">용돈</option><option value="예금">예금</option><option value="적금">적금</option><option value="주식">주식</option><option value="ETF">ETF</option><option value="코인">코인</option><option value="생활비">생활비</option><option value="교육">교육</option><option value="기타">기타</option>
+          <label>
+            카테고리
+            <select id="tx-category" required>
+              <option value="용돈">용돈</option>
+              <option value="예금">예금</option>
+              <option value="적금">적금</option>
+              <option value="주식">주식</option>
+              <option value="ETF">ETF</option>
+              <option value="코인">코인</option>
+              <option value="생활비">생활비</option>
+              <option value="교육">교육</option>
+              <option value="기타">기타</option>
             </select>
           </label>
           <label>금액(원)<input id="tx-amount" type="number" min="0" step="100" required /></label>
@@ -71,6 +103,7 @@
 
       <section class="card">
         <h2>대시보드</h2>
+        <h2>한눈에 보기 (대시보드)</h2>
         <div class="kpis">
           <div><strong>총 용돈 수입</strong><span id="kpi-allowance">0원</span></div>
           <div><strong>총 저축</strong><span id="kpi-saving">0원</span></div>
@@ -84,12 +117,14 @@
 
       <section class="card">
         <h2>검색 필터</h2>
+        <h2>다양한 검색 필터</h2>
         <form id="filter-form" class="grid-form">
           <label>시작일<input id="filter-start" type="date" /></label>
           <label>종료일<input id="filter-end" type="date" /></label>
           <label>종류<select id="filter-type"><option value="all">전체</option><option value="allowance">용돈 수입</option><option value="saving">저축</option><option value="investment">투자</option><option value="expense">지출</option></select></label>
           <label>카테고리<select id="filter-category"><option value="all">전체</option><option value="용돈">용돈</option><option value="예금">예금</option><option value="적금">적금</option><option value="주식">주식</option><option value="ETF">ETF</option><option value="코인">코인</option><option value="생활비">생활비</option><option value="교육">교육</option><option value="기타">기타</option></select></label>
           <button type="submit">적용</button>
+          <button type="submit">필터 적용</button>
           <button type="button" id="filter-reset" class="secondary">초기화</button>
         </form>
       </section>
@@ -97,22 +132,52 @@
       <section class="card">
         <h2>일자별 용돈 수입 합계</h2>
         <table><thead><tr><th>일자</th><th>합계</th></tr></thead><tbody id="daily-table"></tbody></table>
+        <table>
+          <thead>
+            <tr><th>일자</th><th>합계</th></tr>
+        <h2>일자별 합계</h2>
+        <table>
+          <thead>
+            <tr><th>일자</th><th>용돈 수입 합계</th></tr>
+          </thead>
+          <tbody id="daily-table"></tbody>
+        </table>
       </section>
 
       <section class="card">
         <h2>카테고리별 합계</h2>
         <table><thead><tr><th>카테고리</th><th>합계</th></tr></thead><tbody id="category-table"></tbody></table>
+        <table>
+          <thead>
+            <tr><th>카테고리</th><th>합계</th></tr>
+          </thead>
+          <tbody id="category-table"></tbody>
+        </table>
       </section>
 
       <section class="card">
         <h2>거래 내역</h2>
         <table><thead><tr><th>일자</th><th>멤버</th><th>종류</th><th>카테고리</th><th>금액</th><th>수익률</th><th>메모</th></tr></thead><tbody id="tx-table"></tbody></table>
+        <table>
+          <thead>
+            <tr><th>일자</th><th>멤버</th><th>종류</th><th>카테고리</th><th>금액</th><th>수익률</th><th>메모</th></tr>
+        <h2>전체 거래 내역</h2>
+        <table>
+          <thead>
+            <tr><th>일자</th><th>멤버</th><th>종류</th><th>금액</th><th>수익률</th><th>메모</th></tr>
+          </thead>
+          <tbody id="tx-table"></tbody>
+        </table>
       </section>
     </main>
 
     <footer>
       <small>프로토타입 저장소: 브라우저 LocalStorage (다음 단계: 구글 로그인 + 클라우드 동기화)</small>
     </footer>
+      <small>프로토타입 저장소: 브라우저 LocalStorage (계정 공유/동기화는 다음 단계에서 Firebase 연동)</small>
+      <small>현재 버전은 브라우저 LocalStorage에 저장됩니다. (프로토타입)</small>
+    </footer>
+
     <script src="app.js"></script>
   </body>
 </html>
